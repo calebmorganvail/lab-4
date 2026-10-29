@@ -1,7 +1,7 @@
 # Q-Learning Context (loaded on demand)
 
 Loaded by `scripts/context-switcher.sh` when the prompt mentions Q-learning, training,
-policy, reward, epsilon, etc., or when working on a `qlearning*` branch.
+policy, reward, epsilon, etc., or when working on a `qlearning*` or `agent*` branch..
 
 ## Why Q-learning
 T and R are unknown, so model-based methods (value/policy iteration) cannot be used.
@@ -21,6 +21,8 @@ For a terminal s', use max_a' Q(s', a') = 0.
 | max_steps_per_episode | 100 | prevents endless wandering |
 
 ## Expected outputs
-- Final Q-table (16 states x 4 actions, wall row unused).
-- Greedy policy printed as arrows on the 4x4 grid.
-- Total reward per episode (to show learning converges).
+- Final Q-table for every state the agent visited, as `{state: {action: value}}`.
+- Greedy policy printed as arrows, one per visited state. `main.py` takes the grid `--rows` and
+  `--cols` as required command-line arguments (no defaults), used only for display, so the learner
+  never hardcodes them. States with no Q-table entry print as `.`.
+- Average reward per 100 episodes (to show learning converges).
