@@ -23,7 +23,7 @@ lab-4/
 ├── .claude/
 │   ├── settings.json                # S1 – UserPromptSubmit hook → context-switcher.sh
 │   ├── context/                     # S1 – Dynamic imports (loaded only when relevant)
-│   │   ├── environment.md           #      grid, rewards, wall, goal (imported by CLAUDE.md)
+│   │   ├── environment.md           #      grid, rewards, wall, goal (read by main session and environment-builder only)
 │   │   ├── qlearning.md             #      update rule, hyperparameters, expected output
 │   │   └── testing.md               #      pytest plan for env, agent and integration
 │   └── agents/                      # S4 – Sub-agents (YAML frontmatter + instructions)
@@ -49,7 +49,7 @@ Memory is split into three levels, from most stable to most dynamic:
 |---|---|---|
 | Project memory | `CLAUDE.md` | Goal, the "agent never sees T or R" rule, planned architecture, code standards and which sub-agent to use. Short and always relevant; shared through git so every teammate's Claude follows the same rules. |
 | User memory | `~/.claude/CLAUDE.md` (example in `docs/`) | Personal preferences (explanation style, workflow). Not committed because it differs per person. |
-| Dynamic imports | `.claude/context/*.md` | Longer, task-specific details. `environment.md` is imported with `@` in `CLAUDE.md` because every task needs it; `qlearning.md` and `testing.md` are only injected when relevant. |
+| Dynamic imports | `.claude/context/*.md` | Longer, task-specific details. `environment.md` is referenced from CLAUDE.md but deliberately not imported, so the Q-learning agent never sees the grid layout; qlearning.md and testing.md are injected by the hook only when relevant. |
 
 **Hook:** `.claude/settings.json` runs `scripts/context-switcher.sh` on every prompt
 (`UserPromptSubmit`). The script loads `qlearning.md` for prompts about training, Q-tables,
@@ -73,8 +73,7 @@ This addresses **context confusion** (lecture): each agent's knowledge is limite
 and the Q-learning agent is instructed not to read the grid layout.
 
 ### Limits of this approach
-- **Isolation here is instructed, not guaranteed.** The agents have file and shell tools, so the
-  rules in their prompts are advisory unless enforced (see `scripts/block-env-access.sh`).
+- **Isolation here is instructed, not guaranteed.** The agents have file and shell tools, so the rules in their prompts are advisory. The code-reviewer checks that the rules were followed.
 - **Cost.** Each sub-agent has its own context window, and multi-agent runs use substantially more
   tokens than a single conversation (Anthropic's multi-agent research post discusses this:
   https://www.anthropic.com/engineering/multi-agent-research-system).
