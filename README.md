@@ -35,6 +35,7 @@ lab-4/
 ├── docs/
 │   └── user-memory-example.md       # S1 – example of ~/.claude/CLAUDE.md (user level)
 ├── team17.txt                       # Repository + video links for Canvas
+├── requirements.txt                 # numpy and pytest for the later Q-learning lab
 └── README.md
 ```
 
@@ -84,9 +85,10 @@ and the Q-learning agent is instructed not to read the grid layout.
 ## How to use
 
 1. Install [Claude Code](https://docs.claude.com/en/docs/claude-code) and `jq` (used by the hook script).
-2. Open the repo: `cd lab-4 && claude`
-3. Check memory and agents: `/memory` and `/agents`.
-4. Example prompts:
+2. Install the Python dependencies for the later Q-learning lab: `pip install -r requirements.txt`
+3. Open the repo: `cd lab-4 && claude`
+4. Check memory and agents: `/memory` and `/agents`.
+5. Example prompts:
    - `Use the environment-builder sub-agent to create the grid environment.`
    - `Use the qlearning-agent to implement Q-learning and train for 1000 episodes.` (hook loads `qlearning.md`)
    - `Use the code-reviewer to review the changes.`
