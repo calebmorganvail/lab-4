@@ -8,6 +8,9 @@
 PROJECT_DIR="${CLAUDE_PROJECT_DIR:-$(pwd)}"
 CONTEXT_DIR="$PROJECT_DIR/.claude/context"
 
+# Fail safe: without jq the JSON on stdin cannot be parsed, so nothing would ever load.
+command -v jq >/dev/null 2>&1 || { echo "context-switcher: jq not found, skipping dynamic context" >&2; exit 0; }
+
 INPUT=$(cat)                                   # hook input is JSON on stdin
 PROMPT=$(echo "$INPUT" | jq -r '.prompt // ""' 2>/dev/null)
 SESSION=$(echo "$INPUT" | jq -r '.session_id // "default"' 2>/dev/null)
@@ -33,10 +36,10 @@ case "$BRANCH" in
 esac
 
 # Context based on the user's prompt
-if echo "$PROMPT" | grep -Eiq 'q-?learning|q-?table|train|policy|epsilon|alpha|gamma|reward|episode'; then
+if echo "$PROMPT" | grep -Eiqw 'q-?learning|q-?table|train(s|ed|ing)?|policy|epsilon|alpha|gamma|rewards?|episodes?'; then
     add_context "qlearning.md"
 fi
-if echo "$PROMPT" | grep -Eiq 'test|pytest|bug|debug|fail'; then
+if echo "$PROMPT" | grep -Eiqw 'tests?|testing|pytest|bugs?|debug(ging)?|fail(s|ed|ing|ures?)?'; then
     add_context "testing.md"
 fi
 

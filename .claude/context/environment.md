@@ -15,4 +15,6 @@
 - **Goal:** entering `(3, 3)` gives reward +10 and ends the episode (terminal).
 - **All other moves:** reward 0.
 - **Actions:** UP, DOWN, LEFT, RIGHT. Moving off the grid leaves the robot in place.
+- **Transitions:** deterministic. The same action in the same state always gives the same result.
+- **After the goal:** calling `step()` after `done=True` raises `RuntimeError` until `reset()` is called.
 - **Unknowns:** the agent does not know T or R in advance; it must learn from experience.

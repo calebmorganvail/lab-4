@@ -28,7 +28,7 @@ lab-4/
 │   │   └── testing.md               #      pytest plan for env, agent and integration
 │   └── agents/                      # S4 – Sub-agents (YAML frontmatter + instructions)
 │       ├── environment-builder.md   #      builds src/environment.py only
-│       ├── qlearning-agent.md       #      builds src/q_learning.py; cannot see T or R
+│       ├── qlearning-agent.md       #      builds src/q_learning.py; instructed not to read T or R
 │       └── code-reviewer.md         #      read-only review of diffs
 ├── scripts/
 │   └── context-switcher.sh          # S1 – picks context by git branch / prompt keywords
@@ -53,7 +53,7 @@ Memory is split into three levels, from most stable to most dynamic:
 
 **Hook:** `.claude/settings.json` runs `scripts/context-switcher.sh` on every prompt
 (`UserPromptSubmit`). The script loads `qlearning.md` for prompts about training, Q-tables,
-epsilon, rewards, etc. (or on a `qlearning*` branch) and `testing.md` for test/debug prompts
+epsilon, rewards, etc. (or on a `qlearning*` or `agent*` branch) and `testing.md` for test/debug prompts
 (or on a `test*` branch). It logs what it has already loaded in this session and never injects
 the same file twice, which prevents the context bloat warned about in lecture.
 
@@ -70,7 +70,17 @@ a limited set of tools and only the information it needs:
 | `code-reviewer` | Read, Grep, Glob (read-only) | Only the diff | Focused review; checks the isolation rule was not broken. |
 
 This addresses **context confusion** (lecture): each agent's knowledge is limited to its task,
-and the Q-learning agent cannot "cheat" by reading the grid layout.
+and the Q-learning agent is instructed not to read the grid layout.
+
+### Limits of this approach
+- **Isolation here is instructed, not guaranteed.** The agents have file and shell tools, so the
+  rules in their prompts are advisory unless enforced (see `scripts/block-env-access.sh`).
+- **Cost.** Each sub-agent has its own context window, and multi-agent runs use substantially more
+  tokens than a single conversation (Anthropic's multi-agent research post discusses this:
+  https://www.anthropic.com/engineering/multi-agent-research-system).
+- **Shared-context risk.** Cognition argues that agents working from partial context can make
+  conflicting decisions (https://cognition.ai/blog/dont-build-multi-agents). We limit this by
+  splitting along a clean interface (`reset`/`step`/`actions`) and keeping edits to separate files.
 
 ## How to use
 
