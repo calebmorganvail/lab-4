@@ -16,7 +16,8 @@ env.reset() -> state
 env.step(action) -> (next_state, reward, done)
 env.actions -> list of actions
 ```
-- Do NOT open or read `src/environment.py` internals or `.claude/context/environment.md`.
+- Do NOT open or read `src/environment.py` internals or `.claude/context/environment.md`,
+  `.claude/context/testing.md` or `README.md` (they describe the grid layout).
 - Do NOT hardcode grid size, wall, penalty or goal positions. Discover states by interacting.
 
 ## Your scope
