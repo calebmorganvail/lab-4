@@ -34,7 +34,6 @@ lab-4/
 │   └── context-switcher.sh          # S1 – picks context by git branch / prompt keywords
 ├── docs/
 │   └── user-memory-example.md       # S1 – example of ~/.claude/CLAUDE.md (user level)
-├── team17.txt                       # Repository + video links for Canvas
 ├── requirements.txt                 # numpy and pytest for the later Q-learning lab
 └── README.md
 ```
