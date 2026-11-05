@@ -37,6 +37,11 @@ lab-4/
 │   └── context-switcher.sh          # S1 – picks context by git branch / prompt keywords
 ├── docs/
 │   └── user-memory-example.md       # S1 – example of ~/.claude/CLAUDE.md (user level)
+├── src/
+│   └── environment.py               # VacuumGridEnv: grid, rewards, living reward (only file that knows T and R)
+├── tests/
+│   └── test_environment.py          # pytest tests for the environment
+├── pytest.ini                       # lets tests import from src/
 ├── requirements.txt                 # numpy and pytest for the later Q-learning lab
 └── README.md
 ```

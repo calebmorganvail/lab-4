@@ -13,7 +13,9 @@
 - **Wall:** `(1, 1)` cannot be entered; moving into it leaves the robot where it is.
 - **Penalty:** entering `(3, 1)` gives reward -1 (not terminal).
 - **Goal:** entering `(3, 3)` gives reward +10 and ends the episode (terminal).
-- **All other moves:** reward 0.
+- **All other moves (including bumping into a wall or edge):** the **living reward**, a small
+  per-step cost set with `VacuumGridEnv(living_reward=...)` (default -0.04). It pushes the robot
+  to reach the goal in fewer steps. The -1 and +10 squares give their own reward instead.
 - **Actions:** UP, DOWN, LEFT, RIGHT. Moving off the grid leaves the robot in place.
 - **Transitions:** deterministic. The same action in the same state always gives the same result.
 - **After the goal:** calling `step()` after `done=True` raises `RuntimeError` until `reset()` is called.
