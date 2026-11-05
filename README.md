@@ -1,8 +1,7 @@
 # Lab 4 – Vacuum Robot with Reinforcement Learning (Team 17)
 
 A vacuum robot must learn to reach the +10 square of the grid below. We **do not have the
-transition model T or the reward function R**, so the robot will learn with **Q-learning**
-(implemented in a later lab). This repository sets up the **context engineering** that an
+transition model T or the reward function R**, so the robot will learn with **Q-learning**. This repository contains the Q-learning agent and the **context engineering** that an
 AI coding agent (Claude Code) will use to build that agent, using:
 
 - **Strategy 1 – Write (Persistent Memory Architecture)**
@@ -38,16 +37,17 @@ lab-4/
 ├── docs/
 │   └── user-memory-example.md       # S1 – example of ~/.claude/CLAUDE.md (user level)
 ├── src/
-│   └── environment.py               # VacuumGridEnv: grid, rewards, living reward (only file that knows T and R)
+│   ├── environment.py               # VacuumGridEnv: grid, rewards, living reward (only file that knows T and R)
+│   └── q_learning.py                # QLearningAgent – Q-table, epsilon-greedy, update rule
 ├── tests/
-│   └── test_environment.py          # pytest tests for the environment
+│   ├── test_environment.py          # pytest tests for the environment
+│   └── test_q_learning.py           # pytest tests for q-learning
 ├── pytest.ini                       # lets tests import from src/
-├── requirements.txt                 # numpy and pytest for the later Q-learning lab
+├── requirements.txt                 # numpy and pytest
 └── README.md
 ```
 
-Planned code (written by the sub-agents in a later lab): `src/environment.py`,
-`src/q_learning.py`, `src/main.py`, `tests/`.
+Planned code (written by the sub-agents in a later lab):`src/main.py`, `tests/`.
 
 ## Strategy 1 – Write (Persistent Memory Architecture)
 
@@ -105,10 +105,11 @@ MCP server would add a process to run without adding anything the other three do
 ## How to use
 
 1. Install [Claude Code](https://docs.claude.com/en/docs/claude-code) and `jq` (used by the hook script).
-2. Install the Python dependencies for the later Q-learning lab: `pip install -r requirements.txt`
-3. Open the repo: `cd lab-4 && claude`
-4. Check memory and agents: `/memory` and `/agents`. The skill appears as `/train-and-report`.
-5. Example prompts:
+2. Install the Python dependencies: `pip install -r requirements.txt`
+3. Run the tests: `pytest -q`
+4. Open the repo: `cd lab-4 && claude`
+5. Check memory and agents: `/memory` and `/agents`. The skill appears as `/train-and-report`.
+6. Example prompts:
    - `Use the environment-builder sub-agent to create the grid environment.`
    - `Use the qlearning-agent to implement Q-learning and train for 1000 episodes.` (hook loads `qlearning.md`)
    - `Use the code-reviewer to review the changes.`
