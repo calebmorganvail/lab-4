@@ -18,7 +18,9 @@ it does not write or change source files.
 2. **Install dependencies if needed:** `pip install -r requirements.txt`
 3. **Run the tests:** `pytest -q`
    - If any test fails, stop. Report the failing test names and the error, and do not train.
-4. **Train:** `python src/main.py` with its fixed random seed. Capture the full output.
+4. **Train:** `python src/main.py --rows 4 --cols 4` with its fixed random seed. Capture the full
+   output. `--rows` and `--cols` are required (no defaults) and only control how the policy grid
+   is displayed; the program exits with an error if either is missing.
 5. **Read the hyperparameters** from the constants at the top of `src/main.py`
    (living reward, discount factor, learning rate, epsilon and its decay, episodes).
    Read them; do not change them.
