@@ -38,9 +38,11 @@ lab-4/
 │   └── user-memory-example.md       # S1 – example of ~/.claude/CLAUDE.md (user level)
 ├── src/
 │   ├── environment.py               # VacuumGridEnv: grid, rewards, living reward (only file that knows T and R)
+│   ├── main.py                      # Training Loop and output of final learned environment.
 │   └── q_learning.py                # QLearningAgent – Q-table, epsilon-greedy, update rule
 ├── tests/
 │   ├── test_environment.py          # pytest tests for the environment
+│   ├── test_integration.py          # pytest tests for integrating the environment and q-learning agent in our training loop.
 │   └── test_q_learning.py           # pytest tests for q-learning
 ├── pytest.ini                       # lets tests import from src/
 ├── requirements.txt                 # numpy and pytest
