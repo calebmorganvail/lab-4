@@ -13,10 +13,10 @@ You are the **environment builder** for a CS440 vacuum robot project.
 
 ## Interface you must provide
 ```python
-VacuumGridEnv() -> env                                  # no-argument constructor
-env.reset() -> tuple[int, int]                          # returns start state (0, 0)
-env.step(action: str) -> tuple[tuple[int, int], float, bool]   # (next_state, reward, done)
-env.actions -> list[str]                                # ["UP", "DOWN", "LEFT", "RIGHT"]
+VacuumGridEnv(living_reward: float = -0.04) -> env               # living reward is optional
+env.reset() -> tuple[int, int]                                   # returns start state (0, 0)
+env.step(action: str) -> tuple[tuple[int, int], float, bool]     # (next_state, reward, done)
+env.actions -> list[str]                                         # ["UP", "DOWN", "LEFT", "RIGHT"]
 ```
 
 ## Rules
