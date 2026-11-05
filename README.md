@@ -26,10 +26,13 @@ lab-4/
 │   │   ├── environment.md           #      grid, rewards, wall, goal (read by main session and environment-builder only)
 │   │   ├── qlearning.md             #      update rule, hyperparameters, expected output
 │   │   └── testing.md               #      pytest plan for env, agent and integration
-│   └── agents/                      # S4 – Sub-agents (YAML frontmatter + instructions)
-│       ├── environment-builder.md   #      builds src/environment.py only
-│       ├── qlearning-agent.md       #      builds src/q_learning.py; instructed not to read T or R
-│       └── code-reviewer.md         #      read-only review of diffs
+│   ├── agents/                      # S4 – Sub-agents (YAML frontmatter + instructions)
+│   │   ├── environment-builder.md   #      builds src/environment.py only
+│   │   ├── qlearning-agent.md       #      builds src/q_learning.py; instructed not to read T or R
+│   │   └── code-reviewer.md         #      read-only review of diffs
+│   └── skills/
+│       └── train-and-report/
+│           └── SKILL.md             # Skill – run tests, train, report hyperparameters + policy
 ├── scripts/
 │   └── context-switcher.sh          # S1 – picks context by git branch / prompt keywords
 ├── docs/
@@ -81,13 +84,27 @@ and the Q-learning agent is instructed not to read the grid layout.
   conflicting decisions (https://cognition.ai/blog/dont-build-multi-agents). We limit this by
   splitting along a clean interface (`reset`/`step`/`actions`) and keeping edits to separate files.
 
+## Code features (Lab 5)
+
+Lab 5 requires 3 of the 4 Claude Code features (hooks, MCP, skills, sub-agents). We use:
+
+| Feature | Where | Why we chose it |
+|---|---|---|
+| Hooks | `.claude/settings.json` → `scripts/context-switcher.sh` | Loads Q-learning or testing context only when the prompt needs it, keeping `CLAUDE.md` small. |
+| Sub-agents | `.claude/agents/` | Isolates the learner from the environment so it never sees T or R, like the real problem. |
+| Skills | `.claude/skills/train-and-report/SKILL.md` | One repeatable procedure for testing, training and reporting results, so every teammate gets the same demo output and hyperparameter report. It only runs and reports; it never edits code. |
+
+We did not use MCP: the project has no external service or data source to connect, so an
+MCP server would add a process to run without adding anything the other three don't cover.
+
 ## How to use
 
 1. Install [Claude Code](https://docs.claude.com/en/docs/claude-code) and `jq` (used by the hook script).
 2. Install the Python dependencies for the later Q-learning lab: `pip install -r requirements.txt`
 3. Open the repo: `cd lab-4 && claude`
-4. Check memory and agents: `/memory` and `/agents`.
+4. Check memory and agents: `/memory` and `/agents`. The skill appears as `/train-and-report`.
 5. Example prompts:
    - `Use the environment-builder sub-agent to create the grid environment.`
    - `Use the qlearning-agent to implement Q-learning and train for 1000 episodes.` (hook loads `qlearning.md`)
    - `Use the code-reviewer to review the changes.`
+   - `/train-and-report` (runs tests, trains and reports hyperparameters, policy and results)

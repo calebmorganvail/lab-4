@@ -49,3 +49,7 @@ the main conversation:
   penalty or goal positions into its prompt.
 - When delegating to `code-reviewer`, paste the diff into the prompt (it has no shell to run `git diff`).
 - Integration tests (`tests/test_integration.py`) are written by the main session, not by a sub-agent.
+
+## Skills
+- `train-and-report` (`.claude/skills/train-and-report/`) – use when asked to train, run, evaluate
+  or demo the robot. It runs tests, trains and reports; it never edits code.
