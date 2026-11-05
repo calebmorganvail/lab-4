@@ -14,7 +14,8 @@ Environment details live in `.claude/context/environment.md`. Only the main sess
 
 ## Non-negotiable rules
 - The learner (`src/q_learning.py`, `src/main.py`) must never read T, R or the grid layout directly.
-  It only interacts through `VacuumGridEnv()`, `env.reset()`, `env.actions` and
+  It only interacts through `VacuumGridEnv()` (or `VacuumGridEnv(living_reward=...)` in `main.py`,
+since the living reward is a hyperparameter we choose), `env.reset()`, `env.actions` and
   `env.step(action) -> (next_state, reward, done)`.
 - Keep the environment (`src/environment.py`) and the learner (`src/q_learning.py`) in separate files.
 - Do not hardcode the optimal path or policy anywhere.
